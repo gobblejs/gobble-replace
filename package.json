@@ -1,0 +1,9 @@
+{
+  "name": "gobble-replace",
+  "version": "0.1.0",
+  "description": "Replace ${variables} in text with gobble",
+  "author": "Rich Harris",
+  "keywords": [
+    "gobble"
+  ]
+}
