@@ -1,13 +1,13 @@
-# gobble-esnext
+# gobble-replace
 
-Replace ${variables} in text with gobble and [esnext](https://github.com/esnext/esnext).
+Replace ${variables} in text with gobble.
 
 ## Installation
 
 First, you need to have gobble installed - see the [gobble readme](https://github.com/gobblejs/gobble) for details. Then,
 
 ```bash
-npm i -D gobble-esnext
+npm i -D gobble-replace
 ```
 
 ## Usage
