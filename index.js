@@ -1,16 +1,25 @@
+var MagicString = require( 'magic-string' );
+
 module.exports = replace;
 
 function replace ( text, options ) {
-	var delimiters, pattern, replacements;
+	var delimiters = options.delimiters ? options.delimiters.map( escapeSpecials ) : [ '<@', '@>' ];
+	var pattern = new RegExp( delimiters[0] + '\\s*([^\\s]+)\\s*' + delimiters[1], 'g' );
+	var replacements = options.replacements || options;
 
-	delimiters = options.delimiters ? options.delimiters.map( escapeSpecials ) : [ '\\$\\{', '\\}' ];
-	pattern = new RegExp( delimiters[0] + '\\s*([a-zA-Z_$0-9]+)\\s*' + delimiters[1], 'g' );
+	var magicString = new MagicString( text );
 
-	replacements = options.replacements || options;
+	var match;
+	while ( match = pattern.exec( text ) ) {
+		if ( replacements.hasOwnProperty( match[1] ) ) {
+			magicString.replace( match.index, match.index + match[0].length, replacements[ match[1] ] );
+		}
+	}
 
-	return text.replace( pattern, function ( match, $1 ) {
-		return replacements[ $1 ] || match;
-	});
+	return {
+		code: magicString.toString(),
+		map: magicString.generateMap({ hires: true })
+	};
 }
 
 replace.defaults = {

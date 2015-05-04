@@ -1,12 +1,15 @@
 {
   "name": "gobble-replace",
-  "version": "0.1.0",
-  "description": "Replace ${variables} in text with gobble",
+  "version": "0.2.0",
+  "description": "Replace <@variables@> in text with gobble",
   "author": "Rich Harris",
   "keywords": [
     "gobble"
   ],
   "files": [
     "index.js"
-  ]
+  ],
+  "dependencies": {
+    "magic-string": "^0.4.9"
+  }
 }
