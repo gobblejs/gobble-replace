@@ -1,6 +1,6 @@
 # gobble-replace
 
-Replace ${variables} in text with gobble.
+Replace <@variables@> in text with gobble.
 
 ## Installation
 
@@ -43,4 +43,4 @@ module.exports = gobble( 'templates' ).map( 'replace', {
 
 ## License
 
-MIT. Copyright 2014 Rich Harris
+MIT. Copyright 2014-15 Rich Harris
