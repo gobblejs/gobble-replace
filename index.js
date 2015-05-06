@@ -7,19 +7,27 @@ function replace ( text, options ) {
 	var pattern = new RegExp( delimiters[0] + '\\s*([^\\s]+)\\s*' + delimiters[1], 'g' );
 	var replacements = options.replacements || options;
 
-	var magicString = new MagicString( text );
+	if ( options.sourceMap ) {
+		var magicString = new MagicString( text );
 
-	var match;
-	while ( match = pattern.exec( text ) ) {
-		if ( replacements.hasOwnProperty( match[1] ) ) {
-			magicString.replace( match.index, match.index + match[0].length, replacements[ match[1] ] );
+		var match;
+		while ( match = pattern.exec( text ) ) {
+			if ( replacements.hasOwnProperty( match[1] ) ) {
+				magicString.replace( match.index, match.index + match[0].length, replacements[ match[1] ] );
+			}
 		}
+
+		return {
+			code: magicString.toString(),
+			map: options.sourceMap ? magicString.generateMap({ hires: true }) : null
+		};
 	}
 
-	return {
-		code: magicString.toString(),
-		map: magicString.generateMap({ hires: true })
-	};
+	else {
+		return text.replace( pattern, function ( match, $1 ) {
+			return $1 in replacements ? replacements[ $1 ] : match;
+		});
+	}
 }
 
 replace.defaults = {
