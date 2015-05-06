@@ -1,6 +1,6 @@
 {
   "name": "gobble-replace",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Replace <@variables@> in text with gobble",
   "author": "Rich Harris",
   "license": "MIT",

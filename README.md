@@ -16,17 +16,17 @@ npm i -D gobble-replace
 
 ```js
 var gobble = require( 'gobble' );
-module.exports = gobble( 'templates' ).map( 'replace', { foo: 'bar', answer: 42 });
-```
-
-You can use custom delimiters if you prefer:
-
-```js
-var gobble = require( 'gobble' );
 module.exports = gobble( 'templates' ).map( 'replace', {
+  // all instances of `<@foo@>` and `<@answer@>` in the
+  // files in `templates` will be replaced
   foo: 'bar',
   answer: 42,
+
+  // supply custom delimiters
   delimiters: [ '<%=', '%>' ]
+
+  // generate a sourcemap
+  sourceMap: true
 });
 ```
 
@@ -36,7 +36,8 @@ Or, if you want to be really anal about keeping options and variables separate..
 var gobble = require( 'gobble' );
 module.exports = gobble( 'templates' ).map( 'replace', {
   replacements: { foo: 'bar', answer: 42 },
-  delimiters: [ '<%=', '%>' ]
+  delimiters: [ '<%=', '%>' ],
+  sourceMap: true
 });
 ```
 
