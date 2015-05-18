@@ -1,5 +1,10 @@
 # changelog
 
+## 0.2.2
+
+* Generate sourcemaps by default if source is `.js` or `.css`
+* Make tag detector regex non-greedy
+
 ## 0.2.1
 
 * Make sourcemaps optional, with `sourceMap: true`
