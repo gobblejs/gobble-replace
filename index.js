@@ -1,13 +1,17 @@
+var extname = require( 'path' ).extname;
 var MagicString = require( 'magic-string' );
 
 module.exports = replace;
 
 function replace ( text, options ) {
 	var delimiters = options.delimiters ? options.delimiters.map( escapeSpecials ) : [ '<@', '@>' ];
-	var pattern = new RegExp( delimiters[0] + '\\s*([^\\s]+)\\s*' + delimiters[1], 'g' );
+	var pattern = new RegExp( delimiters[0] + '\\s*([^\\s]+?)\\s*' + delimiters[1], 'g' );
 	var replacements = options.replacements || options;
 
-	if ( options.sourceMap ) {
+	var ext = extname( this.src );
+	var sourceMap = 'sourceMap' in options ? options.sourceMap : ( ext === '.js' || ext === '.css' );
+
+	if ( sourceMap ) {
 		var magicString = new MagicString( text );
 
 		var match;
@@ -19,7 +23,7 @@ function replace ( text, options ) {
 
 		return {
 			code: magicString.toString(),
-			map: options.sourceMap ? magicString.generateMap({ hires: true }) : null
+			map: magicString.generateMap({ hires: true })
 		};
 	}
 
