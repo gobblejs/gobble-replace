@@ -1,6 +1,6 @@
 {
   "name": "gobble-replace",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Replace <@variables@> in text with gobble",
   "author": "Rich Harris",
   "license": "MIT",
@@ -14,5 +14,12 @@
   ],
   "dependencies": {
     "magic-string": "^0.4.9"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "sander": "^0.3.4"
   }
 }

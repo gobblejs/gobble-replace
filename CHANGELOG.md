@@ -1,5 +1,9 @@
 # changelog
 
+## 0.3.0
+
+* Replaces nested properties (e.g. `<@foo.bar.baz@>`)
+
 ## 0.2.2
 
 * Generate sourcemaps by default if source is `.js` or `.css`

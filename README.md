@@ -21,6 +21,9 @@ module.exports = gobble( 'templates' ).map( 'replace', {
   // files in `templates` will be replaced
   foo: 'bar',
   answer: 42,
+  object: {
+    nested: 'value' // you can do `<@object.nested@>` dot notation
+  }
 
   // supply custom delimiters
   delimiters: [ '<%=', '%>' ]
