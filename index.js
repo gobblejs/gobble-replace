@@ -3,6 +3,30 @@ var MagicString = require( 'magic-string' );
 
 module.exports = replace;
 
+var NO_MATCH = {};
+var hasProp = {}.hasOwnProperty;
+
+function getValue ( obj, keypath ) {
+	var keys = keypath.split( '.' );
+
+	do {
+		key = keys.shift();
+		if ( !hasProp.call( obj, key ) ) {
+			return NO_MATCH;
+		}
+
+		obj = obj[ key ];
+	} while ( keys.length );
+
+	return obj;
+}
+
+function escapeSpecials ( str ) {
+	return str.replace( /\\/g, '//' ).replace( /[\.\+\*\?\[\^\]\$\(\)\{\}\!\|\:\-]/g, function ( match ) {
+		return '\\' + match;
+	});
+}
+
 function replace ( text, options ) {
 	var delimiters = options.delimiters ? options.delimiters.map( escapeSpecials ) : [ '<@', '@>' ];
 	var pattern = new RegExp( delimiters[0] + '\\s*([^\\s]+?)\\s*' + delimiters[1], 'g' );
@@ -16,8 +40,9 @@ function replace ( text, options ) {
 
 		var match;
 		while ( match = pattern.exec( text ) ) {
-			if ( replacements.hasOwnProperty( match[1] ) ) {
-				magicString.replace( match.index, match.index + match[0].length, replacements[ match[1] ] );
+			value = getValue( replacements, match[1] );
+			if ( value && value !== NO_MATCH ) {
+				magicString.replace( match.index, match.index + match[0].length, value );
 			}
 		}
 
@@ -29,7 +54,8 @@ function replace ( text, options ) {
 
 	else {
 		return text.replace( pattern, function ( match, $1 ) {
-			return $1 in replacements ? replacements[ $1 ] : match;
+			var value = getValue( replacements, $1 );
+			return value !== NO_MATCH ? value : match;
 		});
 	}
 }
@@ -38,9 +64,3 @@ replace.defaults = {
 	// we only want to use this function with text files - not binaries (images etc)
 	accept: 'html svg txt md hbs json cson xml yml js coffee ts css scss sass'.split( ' ' ).map( function ( ext ) { return '.' + ext; })
 };
-
-function escapeSpecials ( str ) {
-	return str.replace( /\\/g, '//' ).replace( /[\.\+\*\?\[\^\]\$\(\)\{\}\!\|\:\-]/g, function ( match ) {
-		return '\\' + match;
-	});
-}
