@@ -1,5 +1,9 @@
 # changelog
 
+## 0.3.1
+
+* Allow replacement values to be the empty string, when generating sourcemaps
+
 ## 0.3.0
 
 * Replaces nested properties (e.g. `<@foo.bar.baz@>`)
