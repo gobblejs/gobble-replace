@@ -41,7 +41,7 @@ function replace ( text, options ) {
 		var match;
 		while ( match = pattern.exec( text ) ) {
 			value = getValue( replacements, match[1] );
-			if ( value && value !== NO_MATCH ) {
+			if ( value !== NO_MATCH ) {
 				magicString.replace( match.index, match.index + match[0].length, value );
 			}
 		}

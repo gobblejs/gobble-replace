@@ -29,5 +29,31 @@ describe( 'gobble-replace', function () {
 		assert.equal( transformed, 'should be different' );
 	});
 
+	it( 'replaces content if options.sourceMap is true', function () {
+		var transformed = transformer( 'should be <@replaced@>', {
+			replaced: 'not the same',
+			sourceMap: true
+		});
+
+		assert.equal( transformed.code, 'should be not the same' );
+	});
+
+	it( 'replaces content with an empty string', function () {
+		var transformed = transformer( 'should be <@hidden@>', {
+			hidden: ''
+		});
+
+		assert.equal( transformed, 'should be ' );
+	});
+
+	it( 'replaces content with an empty string if options.sourceMap is true', function () {
+		var transformed = transformer( 'should be <@hidden@>', {
+			hidden: '',
+			sourceMap: true
+		});
+
+		assert.equal( transformed.code, 'should be ' );
+	});
+
 	// TODO test sourcemaps etc
 });
